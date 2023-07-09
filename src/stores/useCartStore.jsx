@@ -20,22 +20,24 @@ const openDeleteNotification = title =>
 
 const useCartStore = create(set => ({
   products: [],
-  addProduct: product =>
-    set(state => {
-      openAddNotification(product.title)
-      return { products: [...state.products, product] }
-    }),
-  removeProduct: index =>
-    set(state => ({
-      products: state.products.filter(({ title }, currentIndex) => {
-        if (currentIndex === index) {
-          openDeleteNotification(title)
-          return false
-        }
-
-        return true
+  actions: {
+    addProduct: product =>
+      set(state => {
+        openAddNotification(product.title)
+        return { products: [...state.products, product] }
       }),
-    })),
+    removeProduct: index =>
+      set(state => ({
+        products: state.products.filter(({ title }, currentIndex) => {
+          if (currentIndex === index) {
+            openDeleteNotification(title)
+            return false
+          }
+
+          return true
+        }),
+      })),
+  },
 }))
 
 export default useCartStore

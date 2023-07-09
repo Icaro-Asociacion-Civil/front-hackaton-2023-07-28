@@ -4,7 +4,7 @@ import { useCartStore } from "../../stores"
 
 const Cart = () => {
   const products = useCartStore(state => state.products)
-  const removeProduct = useCartStore(state => state.removeProduct)
+  const actions = useCartStore(state => state.actions)
   const totalPrice = products
     .map(({ price }) => price)
     .reduce((a, b) => a + b, 0)
@@ -31,7 +31,7 @@ const Cart = () => {
                   <Button
                     type="ghost"
                     size="small"
-                    onClick={() => removeProduct(index)}
+                    onClick={() => actions.removeProduct(index)}
                   >
                     <CloseOutlined style={{ color: "red" }} />
                   </Button>

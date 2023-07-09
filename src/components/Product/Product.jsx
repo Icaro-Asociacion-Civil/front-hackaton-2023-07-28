@@ -5,8 +5,7 @@ import "./styles.css"
 
 const Product = productProps => {
   const { title, text, imageLink, price } = productProps
-  const addProduct = useCartStore(state => state.addProduct)
-  console.log(useCartStore())
+  const actions = useCartStore(state => state.actions)
 
   return (
     <Card
@@ -14,7 +13,11 @@ const Product = productProps => {
       hoverable
       style={{ width: "15rem" }}
       cover={<Image src={imageLink} style={{ maxHeight: "15rem" }} />}
-      extra={<Button onClick={() => addProduct(productProps)}>Agregar</Button>}
+      extra={
+        <Button onClick={() => actions.addProduct(productProps)}>
+          Agregar
+        </Button>
+      }
     >
       <Card.Meta title={price && <p>${price}</p>} description={text} />
     </Card>
