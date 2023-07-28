@@ -1,14 +1,12 @@
 import { Avatar, List, Button } from "antd"
 import { CloseOutlined } from "@ant-design/icons"
 import { useCartStore } from "../../stores"
+import { calcTotalPrice } from "../../hackaton-utilities"
 
 const Cart = () => {
   const products = useCartStore(state => state.products)
   const actions = useCartStore(state => state.actions)
-  const totalPrice = products
-    .map(({ price }) => price)
-    .reduce((a, b) => a + b, 0)
-    .toFixed(2)
+  const totalPrice = calcTotalPrice(products)
 
   return (
     <>

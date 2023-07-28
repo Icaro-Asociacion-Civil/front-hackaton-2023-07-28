@@ -30,3 +30,7 @@
   background-color: #e5e0ff;
   color: #7286d3;
 }
+
+.hackaton-comprar button {
+  background-color: red;
+}

@@ -1,9 +1,12 @@
 import { useState } from "react"
 import { Cart, Products } from "../../components"
-import { useProductosQuery } from "../../hooks"
+import { useOrderMutation, useProductosQuery } from "../../hooks"
+import { useCartStore } from "../../stores"
 import { Button, Drawer } from "antd"
 import { ShoppingCartOutlined } from "@ant-design/icons"
+import { addFilters } from "../../hackaton-utilities"
 import "./styles.css"
+import "../../hackaton-utilities/hackaton-styles.css"
 
 function HomePage() {
   const [title, setTitle] = useState("")
@@ -12,11 +15,20 @@ function HomePage() {
   const [category, setCategory] = useState("")
   const { categories, products, isLoading } = useProductosQuery()
   const [isShow, setIsShow] = useState(false)
+  const { createOrder } = useOrderMutation()
+  const orderProducts = useCartStore(state => state.products)
 
   return (
     <section>
       <Drawer
-        title="Tus Productos"
+        title={
+          <div className="hackaton-comprar">
+            <Button onClick={() => createOrder({ order: orderProducts })}>
+              Comprar
+            </Button>
+            <p>Tus Productos</p>
+          </div>
+        }
         onClose={() => setIsShow(false)}
         open={isShow}
       >
@@ -84,11 +96,7 @@ function HomePage() {
         <span>cargando...</span>
       ) : (
         <Products
-          products={products
-            .filter(producto => producto.price > price)
-            .filter(producto => !category || producto.category === category)
-            .filter(producto => producto.title.toLowerCase().includes(title))
-            .sort((a, b) => (isSort ? a.price - b.price : 1))}
+          products={addFilters(products, { price, category, title, isSort })}
         />
       )}
     </section>

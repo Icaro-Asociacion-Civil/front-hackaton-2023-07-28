@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
 const getProducts = () =>
-  axios.get("https://fakestoreapi.com/products").then(({ data }) => data)
+  axios.get("/api/products").then(({ data }) => data)
 
 const useProductosQuery = () => {
   const { data: products = [], isLoading } = useQuery({
